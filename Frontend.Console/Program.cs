@@ -10,4 +10,13 @@ var infix3 = "4*7^(1/3)*7*((1+9)/3*7^4)";
 Console.WriteLine($"Infix = {infix3}, Result = {ExpressionEvaluator.Evalute(infix3):N5}"); // 428,675.12518474100 
 
 var infix4 = "144^(1/2)";
-Console.WriteLine($"Infix = {infix4}, Result = {ExpressionEvaluator.Evalute(infix4):N5}"); // 12
+Console.WriteLine($"Infix = {infix4}, Result = {ExpressionEvaluator.Evalute(infix4):N5}"); // 12 digits
+
+var infix5 = "8.5+8.5";
+Console.WriteLine($"Infix = {infix5}, Result = {ExpressionEvaluator.Evalute(infix5):N5}"); // 17 decimals
+
+var infix6 = "144";
+Console.WriteLine($"Infix = {infix6}, Result = {ExpressionEvaluator.Evalute(infix6):N5}"); // 144 numbers without operators
+
+var infix7 = "12.5*2+10.5";
+Console.WriteLine($"Infix = {infix7}, Result = {ExpressionEvaluator.Evalute(infix7):N5}"); //mix 

@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Reflection.Metadata;
+using System.Globalization; //To read decimal numbers with a point
 
 namespace Backend;
 
@@ -9,18 +10,25 @@ public static class ExpressionEvaluator
 
     private static string ToPostfix(string infix)
     {
-        var posfix = string.Empty;
+        var postfix = string.Empty; //1. var posfix = string.Empty change varible name
         var stack = new Stack<char>();
+        var number = string.Empty; //3. new line to accumulate each caracter for the same number
         foreach (var item in infix)
         {
             if (IsOperator(item))
             {
+                if (number != string.Empty) // 4. Add the complete number to postfix
+                {
+                    postfix += number + " ";
+                    number = string.Empty;
+                }
+
                 if (item == ')')
                 {
                     var ope = stack.Pop();
                     while(ope != '(')
                     {
-                        posfix += ope;
+                        postfix += ope + " "; //6. operator will be separate from each operands
                         ope = stack.Pop();
                     }
                 }
@@ -28,7 +36,7 @@ public static class ExpressionEvaluator
                 {
                     if (stack.Count == 0)
                     {
-                        stack.Push(item);
+                        stack.Push(item); 
                     }
                     else
                     {
@@ -38,7 +46,7 @@ public static class ExpressionEvaluator
                         }
                         else
                         {
-                            posfix += stack.Pop();
+                            postfix += stack.Pop() + " "; //7. change postfix += stack.Pop(); 
                             stack.Push(item);
                         }
                     }
@@ -46,15 +54,21 @@ public static class ExpressionEvaluator
             }
             else
             {
-                posfix += item;
+                number += item; //3. number is a string so is necessary the change, for example: read "1"- 1, read "14" - 14, read "144"- 144 
             }
         }
-        do
+        
+        if (number != string.Empty) // 5. Add the last number. In case 12 + 35, 35 is the last number and will be in postfix too
         {
-            posfix += stack.Pop();
-        } while (stack.Count != 0);
-        return posfix;
-    }
+            postfix += number + " "; 
+        }
+        while (stack.Count != 0) // change do. Now Check the stack before Pop
+        {
+            postfix += stack.Pop() + " "; // 8. change postfix += stack.Pop(); 
+        } 
+        return postfix;
+    }  
+    
 
     private static int PriorityStack(char op) => op switch
     {
@@ -83,17 +97,17 @@ public static class ExpressionEvaluator
     private static double EvalutePostfix(string postfix)
     {
         var stack = new Stack<double>();
-        foreach (var item in postfix)
+        foreach (var item in postfix.Split(' ', StringSplitOptions.RemoveEmptyEntries)) // 1. change  foreach (var item in postfix) to split postfix when find always an empty space
         {
-            if (IsOperator(item))
+            if (item.Length == 1 && IsOperator(item[0])) //2. change  if (IsOperator(item)) because now is a strind no a character
             {
                 var ope2 = stack.Pop();
                 var ope1 = stack.Pop();
-                stack.Push(Calculate(ope1, ope2, item));
+                stack.Push(Calculate(ope1, ope2, item[0])); // 3. change  if (IsOperator(item)) because now is a strind no a character
             }
             else
             {
-                stack.Push(char.GetNumericValue(item));
+                stack.Push(double.Parse(item, CultureInfo.InvariantCulture));; // 4. change again double.parse convert the build text to number. InvarianCulture reads the point as a decimal separator
             }
         }
         return stack.Pop();
