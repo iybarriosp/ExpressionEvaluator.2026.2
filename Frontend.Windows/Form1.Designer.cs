@@ -58,7 +58,7 @@
             txtDisplay.Location = new Point(30, 20);
             txtDisplay.AutoSize = false;
             txtDisplay.Size = new Size(300, 35);
-            txtDisplay.Font = new Font("Segoe UI", 18F);
+            txtDisplay.Font = new Font("Segoe UI", 15F);
 
             Controls.Add(txtDisplay);
             Controls.Add(btn7);
