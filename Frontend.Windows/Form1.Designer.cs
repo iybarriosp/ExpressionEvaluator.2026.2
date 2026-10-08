@@ -55,9 +55,10 @@
             btnClear = new Button();
             btnDelete = new Button();
 
-            txtDisplay.Location = new Point(30, 30);
+            txtDisplay.Location = new Point(30, 20);
+            txtDisplay.AutoSize = false;
             txtDisplay.Size = new Size(300, 35);
-            txtDisplay.Font = new Font("Comic Sans MS", 18F);
+            txtDisplay.Font = new Font("Segoe UI", 18F);
 
             Controls.Add(txtDisplay);
             Controls.Add(btn7);
@@ -189,9 +190,78 @@
             btnDelete.Size = new Size(130, 50);
             btnDelete.Click += Delete_Click;
 
+
+            // Calculator background color
+            BackColor = Color.FromArgb(45, 45, 45);
+
+            // Green display
+            txtDisplay.BackColor = Color.ForestGreen;
+            txtDisplay.ForeColor = Color.White;
+
+            // number buttons white
+            foreach (var button in new[] {
+                btn0, btn1, btn2, btn3, btn4,
+                btn5, btn6, btn7, btn8, btn9, btnDecimal
+            })
+            {
+                button.BackColor = Color.White;
+                button.UseVisualStyleBackColor = false;
+            }
+
+            // operation buttons orange
+            foreach (var button in new[] {
+                btnPlus, btnMinus, btnMultiply, btnDivide,
+                btnPower, btnOpenParenthesis, btnCloseParenthesis,
+                btnEquals, btnClear, btnDelete
+            })
+            {
+                button.BackColor = Color.Coral;
+                button.UseVisualStyleBackColor = false;
+            }
+
+            // Display position and size
+            txtDisplay.Location = new Point(20, 20);
+            txtDisplay.Size = new Size(530, 40);
+
+            // first line
+            btn7.Location = new Point(20, 80);
+            btn8.Location = new Point(90, 80);
+            btn9.Location = new Point(160, 80);
+            btnOpenParenthesis.Location = new Point(230, 80);
+            btnCloseParenthesis.Location = new Point(300, 80);
+            btnDelete.Location = new Point(370, 80);
+
+            // Second line
+            btn4.Location = new Point(20, 140);
+            btn5.Location = new Point(90, 140);
+            btn6.Location = new Point(160, 140);
+            btnMultiply.Location = new Point(230, 140);
+            btnDivide.Location = new Point(300, 140);
+            btnClear.Location = new Point(370, 140);
+
+            // Third line
+            btn1.Location = new Point(20, 200);
+            btn2.Location = new Point(90, 200);
+            btn3.Location = new Point(160, 200);
+            btnPlus.Location = new Point(230, 200);
+            btnMinus.Location = new Point(300, 200);
+            btnPower.Location = new Point(370, 200);
+
+            // fourth fila
+            btn0.Location = new Point(20, 260);
+            btnDecimal.Location = new Point(160, 260);
+            btnEquals.Location = new Point(230, 260);
+
+            // special sizes
+            btn0.Size = new Size(130, 50);
+            btnDelete.Size = new Size(180, 50);
+            btnClear.Size = new Size(180, 50);
+            btnPower.Size = new Size(180, 50);
+            btnEquals.Size = new Size(320, 50);
+
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(360, 480);
-            Text = "Expression Evaluator";
+            ClientSize = new Size(570, 340);
+            Text = "Functions Evaluator";
         }
 
         #endregion
